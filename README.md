@@ -5,8 +5,6 @@
 </a>
 
 
-
-
 ## 💡 Introduction
 This is the official repo for the paper [Harnessing Consistency for Robust Test-Time LLM Ensemble](https://arxiv.org/abs/2510.13855) in EACL 2026.
 
@@ -15,14 +13,14 @@ This is the official repo for the paper [Harnessing Consistency for Robust Test-
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/overview.png">
-    <img alt="CoRE" src="assets/overview.png" width=500>
+    <img alt="CoRE" src="assets/overview.png" width="100%">
   </picture>
 </p>
 
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/teaser.png">
-    <img alt="CoRE" src="assets/teaser.png" width=500>
+    <img alt="CoRE" src="assets/teaser.png" width="100%">
   </picture>
 </p>
 
@@ -30,7 +28,7 @@ CoRE is a plug-and-play technique that improves ensemble robustness by promoting
 
 - **Bi-level consistency**: penalize uncertain, highly inconsistent tokens via *token-level consistency*, while prioritizing confident and consistent model outputs via *model-level consistency*
 
-- **Plug-and-play integration**: works with diverse ensemble methods and model combinations without retraining
+- **Plug-and-play integration**: works with diverse ensemble methods and model combinations with no additional inference cost
 
 - **Consistent gains**: improves both ensemble accuracy and robustness across benchmarks, ensembles, and model combinations
 
@@ -41,7 +39,7 @@ We evaluate ensemble results with (CoRE) and without (Vanilla) CoRE on 6 benchma
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/benchmark.png">
-    <img alt="benchmark" src="assets/benchmark.png" width=500>
+    <img alt="benchmark" src="assets/benchmark.png" width="100%">
   </picture>
 </p>
 
@@ -49,7 +47,7 @@ We evaluate ensemble results with (CoRE) and without (Vanilla) CoRE on 6 benchma
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/base_model.png">
-    <img alt="base" src="assets/base_model.png" width=200>
+    <img alt="base" src="assets/base_model.png" width="70%">
   </picture>
 </p>
 
@@ -57,7 +55,7 @@ We evaluate ensemble results with (CoRE) and without (Vanilla) CoRE on 6 benchma
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/robust.png">
-    <img alt="robust" src="assets/robust.png" width=500>
+    <img alt="robust" src="assets/robust.png" width="100%">
   </picture>
 </p>
 
@@ -71,7 +69,9 @@ cd CoRE-EACL26
 ### 2. Install packages
 ```
 ENV_NAME=core PYTHON_VERSION=3.9 INSTALL_FLASH_ATTN=1 bash setup.sh
+conda activate core
 ```
+
 
 ## 🧪 Running Experiments
 
@@ -81,8 +81,11 @@ Perform model inference via either command or bash file
 
 #### Option 1: Run via command
 ```
-python src/run.py --main_model InternLM7b --assist_model OpenChat --align_method mined --variant vanilla --task NQ
+python src/run.py --main_model InternLM7b --assist_model OpenChat --align_method mined --variant consist-rbf --task NQ
 ```
+- **```--align_method```**: token alignment method; choose from ```mined, unite, eva, gac```.
+- **```--variant```**: CoRE variant; choose from ```vanilla``` or CoRE variants ```consist-linear, consist-rbf, consist-power,consist-rec```.
+- **```--task```**: choose from ```GSM8K, PIQA, SAMSum, TriviaQA, NQ, MMLU```.
 
 #### Option 2: Run via bash file
 ```
